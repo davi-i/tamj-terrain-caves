@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://bqk4mcip5cxse"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_862tt"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_eqfo2"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c8g3b"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vt6hb"]
+sky_horizon_color = Color(1, 1, 0.878431, 1)
+
+[sub_resource type="Sky" id="Sky_ghmfq"]
+sky_material = SubResource("ProceduralSkyMaterial_vt6hb")
+
+[sub_resource type="Environment" id="Environment_1b6x1"]
+background_mode = 2
+background_color = Color(0, 0.639216, 1, 1)
+sky = SubResource("Sky_ghmfq")
+reflected_light_source = 2
+fog_enabled = true
+fog_mode = 1
+fog_density = 1.0
+fog_depth_curve = 2.0
+fog_depth_begin = 0.0
+fog_depth_end = 128.0
+volumetric_fog_anisotropy = 0.9
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_862tt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_eqfo2")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.565561, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_c8g3b")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1b6x1")

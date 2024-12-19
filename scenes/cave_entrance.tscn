@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhmski4pkqnst"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_bhilo"]
+
+[node name="CaveEntrance" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(4.56385, 0, 0, 0, -0.139654, 3.98984e-07, 0, -1.22089e-08, -4.56385, -0.00533295, 0.222564, -3.29018e-05)
+mesh = SubResource("CapsuleMesh_bhilo")

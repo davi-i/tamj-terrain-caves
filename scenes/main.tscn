@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://b33ch64nxrmfa"]
+
+[ext_resource type="PackedScene" uid="uid://bqk4mcip5cxse" path="res://scenes/player.tscn" id="2_gp6t3"]
+[ext_resource type="PackedScene" uid="uid://bsbtqvs3plu6r" path="res://scenes/terrain_generator.tscn" id="4_kavxw"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rg7fv"]
+noise_type = 3
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ieq4m"]
+noise_type = 3
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_a5nbk"]
+noise_type = 3
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qal2c"]
+noise_type = 3
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1j17l"]
+noise_type = 3
+
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.203796, 0, 2.39996)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 296.433, 0)
+light_angular_distance = 90.0
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("2_gp6t3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0)
+
+[node name="TerrainGenerator" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_kavxw")]
+chunk_size = 256.0
+chunk_subdivide = 16.0
+lacunarity = 2.0
+persistence = 0.5
+octaves = 4.0
+total_amplitude = 20.0
+cave_noise = SubResource("FastNoiseLite_rg7fv")
+cave_dispersion_noise = SubResource("FastNoiseLite_ieq4m")
+tree_noise = SubResource("FastNoiseLite_a5nbk")
+tree_dispersion_noise = SubResource("FastNoiseLite_qal2c")
+terrain_noise = SubResource("FastNoiseLite_1j17l")
+player = NodePath("../Player")
