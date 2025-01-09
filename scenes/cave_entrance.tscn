@@ -1,9 +1,31 @@
-[gd_scene load_steps=2 format=3 uid="uid://bhmski4pkqnst"]
+[gd_scene load_steps=6 format=3 uid="uid://bhmski4pkqnst"]
+
+[ext_resource type="Script" path="res://scripts/cave_entrance.gd" id="1_8ge88"]
+[ext_resource type="Shader" path="res://materials/cave_entrance.gdshader" id="1_tb6o6"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_bhilo"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ubloy"]
+render_priority = 0
+shader = ExtResource("1_tb6o6")
+shader_parameter/outline_width = 0.001
+shader_parameter/outline_color = Color(1, 1, 1, 0.3)
+shader_parameter/time_factor = 0.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_84gme"]
+material = SubResource("ShaderMaterial_ubloy")
+top_radius = 0.001
+bottom_radius = 5.0
+height = 100.0
+
 [node name="CaveEntrance" type="Node3D"]
+script = ExtResource("1_8ge88")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(4.56385, 0, 0, 0, -0.139654, 3.98984e-07, 0, -1.22089e-08, -4.56385, -0.00533295, 0.222564, -3.29018e-05)
+visible = false
 mesh = SubResource("CapsuleMesh_bhilo")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
+mesh = SubResource("CylinderMesh_84gme")

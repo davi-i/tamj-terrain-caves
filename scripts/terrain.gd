@@ -75,6 +75,8 @@ var rng = RandomNumberGenerator.new()
 func _ready() -> void:
 	generate_mesh()
 
+var terrain_shader = preload("res://materials/terrain.gdshader")
+
 # Called when the node enters the scene tree for the first time.
 func generate_mesh() -> void:
 	var plane_mesh = PlaneMesh.new()
@@ -115,12 +117,26 @@ func generate_mesh() -> void:
 		var normal_noise = (noises_values[i] - 1) / (max_possible_value / 1.75) 
 		var y = normal_noise * total_amplitude
 		vertices[i].y = y
+	
+	data[ArrayMesh.ARRAY_VERTEX] = vertices
+		
+	var array_mesh = ArrayMesh.new()
+	array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,data)
+	
+	surface_tool.create_from(array_mesh,0)
+	surface_tool.generate_normals()
+
 	var find_in_vertices = func(x: float, z: float):
+		var closest_y = null
+		var min_distance = INF
+
 		for vertex in vertices:
-			if abs(vertex.x - x) < size / 18 and abs(vertex.z - z) < size / 18:
-				return vertex.y
-		return 0
-	var tree_step = 8
+			var distance = abs(Vector2(vertex.x, vertex.z).distance_to(Vector2(x, z)))
+			if distance < min_distance:
+				min_distance = distance
+				closest_y = vertex.y
+		return closest_y
+	var tree_step = 8.0
 	for x in range(-size / 2, size / 2, tree_step):
 		for z in range(-size / 2, size / 2, tree_step):
 			var tree_noise_value = tree_noise.get_noise_2d(x, z)
@@ -129,37 +145,36 @@ func generate_mesh() -> void:
 			if tree_noise_value >= 0.2:
 				var tree: TreeObj = tree_res.instantiate()
 				var dispersion = tree_dispersion_noise.get_noise_2d(x, z)
-				tree.position.x = x + dispersion * (tree_step / 2)
+				tree.position.x = x + dispersion * (tree_step / 2.0)
 				tree.position.y = find_in_vertices.call(x, z)
-				tree.position.z = z + dispersion * (tree_step / 2)
+				tree.position.z = z + dispersion * (tree_step / 2.0)
 				rng.seed = hash(Vector2(x, z) + offset)
 				tree.rotation.y = rng.randf_range(0, 2 * PI)
 				add_child(tree)
 	var cave_step = 64
+	var caves_positions = []
 	for x in range(-size / 2, size / 2, cave_step):
 		for z in range(-size / 2, size / 2, cave_step):
 			var cave_noise_value = cave_noise.get_noise_2d(x, z)
 			if cave_noise_value >= 0.2:
 				var cave = cave_res.instantiate()
 				var dispersion = cave_dispersion_noise.get_noise_2d(x, z)
-				cave.position.x = x + dispersion * (cave_step / 2)
+				cave.position.x = x + dispersion * (cave_step / 2.0)
 				cave.position.y = find_in_vertices.call(x, z)
-				cave.position.z = z + dispersion * (cave_step / 2)
-				rng.seed = hash(Vector2(x, z) + offset)
-				cave.rotation.y = rng.randf_range(0, 2 * PI)
+				cave.position.z = z + dispersion * (cave_step / 2.0)
+				caves_positions.append(cave.position)
 				add_child(cave)
-	data[ArrayMesh.ARRAY_VERTEX] = vertices
-		
-	var array_mesh = ArrayMesh.new()
-	array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,data)
-	
-	surface_tool.create_from(array_mesh,0)
-	surface_tool.generate_normals()
+				print(cave.global_position)
 	
 	var mesh = surface_tool.commit()
-	var material = StandardMaterial3D.new()
-	material.albedo_color = color
-	mesh.surface_set_material(0, material)
+	var shader_material = ShaderMaterial.new()
+	shader_material.shader = terrain_shader
+	shader_material.set_shader_parameter("color", Vector3(color.r, color.g, color.b))
+	shader_material.set_shader_parameter("cylinder_positions", caves_positions)
+	shader_material.set_shader_parameter("cylinder_count", len(caves_positions))
+	mesh.surface_set_material(0, shader_material)
+	
 	
 	$MeshInstance3D.mesh = mesh
+	
 	$CollisionShape3D.shape = array_mesh.create_trimesh_shape()

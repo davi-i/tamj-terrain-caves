@@ -10,9 +10,7 @@ data = PackedVector3Array(0.6343, 3.398, -0.7881, 0.7869, 2.8293, -1.2921, 2.285
 script = ExtResource("1_e5qhx")
 
 [node name="LowpolyTreeSample" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.621358, 0)
 mesh = ExtResource("1_tx5bg")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.621358, 0)
 shape = SubResource("ConcavePolygonShape3D_5ce6k")

@@ -32,6 +32,8 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, speed)
 
 	move_and_slide()
+	
+	$CanvasLayer/Label.text = str(global_position)
 
 var mouse_sens = 0.3
 

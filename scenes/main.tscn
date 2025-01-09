@@ -5,18 +5,22 @@
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_rg7fv"]
 noise_type = 3
+seed = 50
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ieq4m"]
 noise_type = 3
+seed = 20
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_a5nbk"]
 noise_type = 3
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_qal2c"]
 noise_type = 3
+seed = 30
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_1j17l"]
 noise_type = 3
+seed = 10
 
 [node name="Node3D" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.203796, 0, 2.39996)
