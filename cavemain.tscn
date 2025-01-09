@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://bnh7unatvbypk"]
+
+[ext_resource type="PackedScene" uid="uid://dtoxvypjdkgtn" path="res://scenes/cave_map_generator.tscn" id="1_kup8j"]
+[ext_resource type="Script" path="res://pseudo_player.gd" id="2_644pg"]
+
+[sub_resource type="GDScript" id="GDScript_p0p1t"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wqcfp"]
+
+[node name="Node3D" type="Node3D"]
+script = SubResource("GDScript_p0p1t")
+
+[node name="Cave_Map_Generator" parent="." instance=ExtResource("1_kup8j")]
+
+[node name="PseudoPlayer" type="CharacterBody3D" parent="Cave_Map_Generator"]
+script = ExtResource("2_644pg")
+
+[node name="Camera3D" type="Camera3D" parent="Cave_Map_Generator/PseudoPlayer"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cave_Map_Generator/PseudoPlayer"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cave_Map_Generator/PseudoPlayer"]
+shape = SubResource("CapsuleShape3D_wqcfp")
