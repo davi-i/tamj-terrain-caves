@@ -9,16 +9,16 @@ var mouse_sens = 0.3  # Sensibilidade do mouse
 
 func _physics_process(delta: float) -> void:
 	# Controle de voo (subir com espaço e descer com X)
-	if Input.is_action_just_pressed("ui_"):  # Espaço
+	if Input.is_action_just_pressed("Subir"):  # Espaço
 		is_flying = true  # Ativa o voo (subir)
-	elif Input.is_action_just_pressed("ui_cancel"):  # X
+	elif Input.is_action_just_pressed("Descer"):  # X
 		is_flying = false  # Desativa o voo (descer)
 
 	# Controle de altura se estiver voando
 	if is_flying:
-		if Input.is_action_pressed("ui_accept"):  # Subir
+		if Input.is_action_pressed("Subir"):  # Subir
 			velocity.y = FLY_VELOCITY
-		elif Input.is_action_pressed("ui_cancel"):  # Descer
+		elif Input.is_action_pressed("Descerel"):  # Descer
 			velocity.y = -FLY_VELOCITY
 		else:
 			velocity.y = 0  # Fica parado no eixo Y quando não pressionado
