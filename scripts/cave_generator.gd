@@ -1,5 +1,4 @@
 extends Node
-class_name Cave
 
 const WIDTH = 40
 const HEIGHT = 30
