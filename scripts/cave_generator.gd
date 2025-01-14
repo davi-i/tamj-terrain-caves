@@ -73,7 +73,7 @@ func choose_start_position():
 		start_position = valid_positions[rng.randi() % valid_positions.size()]
 
 func move_player_to_start():
-	var player_node = $Player
+	var player_node = get_tree().root.find_child("Player", true, false)
 	if player_node:
 		var player_pos_x = start_position.x * CELL_SIZE
 		var player_pos_z = start_position.y * CELL_SIZE
