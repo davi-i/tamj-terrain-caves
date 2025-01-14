@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtoxvypjdkgtn"]
+
+[ext_resource type="Script" path="res://scripts/cave_generator.gd" id="1_xvg2y"]
+[ext_resource type="PackedScene" uid="uid://bqk4mcip5cxse" path="res://scenes/player.tscn" id="2_actub"]
+
+[node name="Cave_Generator" type="StaticBody3D"]
+script = ExtResource("1_xvg2y")
+seed = 200
+
+[node name="Player" parent="." instance=ExtResource("2_actub")]
