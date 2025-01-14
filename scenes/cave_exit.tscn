@@ -1,20 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://bt3gfgmlnn2vb"]
+[gd_scene load_steps=4 format=3 uid="uid://oo7d8x4bpoht"]
 
-[ext_resource type="Script" path="res://scripts/cave_entrance.gd" id="1_8ge88"]
-[ext_resource type="PackedScene" uid="uid://cmk4gqf16bnom" path="res://scenes/ray_of_light.tscn" id="2_fku66"]
+[ext_resource type="Script" path="res://scripts/cave_exit.gd" id="1_gh150"]
+[ext_resource type="PackedScene" uid="uid://cmk4gqf16bnom" path="res://scenes/ray_of_light.tscn" id="2_knarj"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_u1iwi"]
 height = 10.0
 radius = 5.0
 
-[node name="CaveEntrance" type="Area3D"]
-script = ExtResource("1_8ge88")
+[node name="CaveExit" type="Area3D"]
+script = ExtResource("1_gh150")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 shape = SubResource("CylinderShape3D_u1iwi")
 
-[node name="RayOfLight" parent="." instance=ExtResource("2_fku66")]
+[node name="RayOfLight" parent="." instance=ExtResource("2_knarj")]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

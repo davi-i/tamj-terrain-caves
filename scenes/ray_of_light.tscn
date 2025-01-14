@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmk4gqf16bnom"]
+
+[ext_resource type="CylinderMesh" uid="uid://bh5a1fv0hscm5" path="res://materials/cave_entrance.tres" id="1_7jmho"]
+[ext_resource type="Script" path="res://scripts/ray_of_light.gd" id="2_1v45n"]
+
+[node name="RayOfLight" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
+mesh = ExtResource("1_7jmho")
+script = ExtResource("2_1v45n")

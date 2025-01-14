@@ -1,0 +1,16 @@
+[gd_resource type="CylinderMesh" load_steps=3 format=3 uid="uid://bh5a1fv0hscm5"]
+
+[ext_resource type="Shader" path="res://materials/cave_entrance.gdshader" id="1_fpgaf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ubloy"]
+render_priority = 0
+shader = ExtResource("1_fpgaf")
+shader_parameter/outline_width = 0.001
+shader_parameter/outline_color = Color(1, 1, 1, 0.3)
+shader_parameter/time_factor = 0.0
+
+[resource]
+material = SubResource("ShaderMaterial_ubloy")
+top_radius = 0.001
+bottom_radius = 5.0
+height = 100.0

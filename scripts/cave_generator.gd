@@ -1,9 +1,10 @@
 extends Node
+class_name Cave
 
 const WIDTH = 40
 const HEIGHT = 30
 const CELL_SIZE = 5
-const WALL_HEIGHT = 5
+const WALL_HEIGHT = 10
 const NUM_LIGHTS = 10
 
 var grid = []
@@ -11,6 +12,9 @@ var start_position = Vector2.ZERO
 var player : Node3D
 
 @export var seed = 0
+var entrance: CaveEntrance
+
+var exit_res = preload("res://scenes/cave_exit.tscn")
 
 var rng = RandomNumberGenerator.new()
 
@@ -71,15 +75,21 @@ func choose_start_position():
 	
 	if valid_positions.size() > 0:
 		start_position = valid_positions[rng.randi() % valid_positions.size()]
+	
 
 func move_player_to_start():
 	var player_node = get_tree().root.find_child("Player", true, false)
-	if player_node:
-		var player_pos_x = start_position.x * CELL_SIZE
-		var player_pos_z = start_position.y * CELL_SIZE
-		var player_pos_y = WALL_HEIGHT + 10 # Coloca o jogador no topo da parede
+	var player_pos_x = start_position.x * CELL_SIZE
+	var player_pos_z = start_position.y * CELL_SIZE
+	var player_pos_y = WALL_HEIGHT  # Coloca o jogador no topo da parede
 		
-		player_node.position = Vector3(player_pos_x, player_pos_y, player_pos_z)
+	
+	player_node.position = Vector3(player_pos_x, player_pos_y, player_pos_z)
+	var exit = exit_res.instantiate()
+	exit.position = Vector3(player_pos_x, 0, player_pos_z)
+	exit.starting = true
+	exit.entrance = entrance
+	add_child(exit)
 
 func draw_2d_cave():
 	for x in range(WIDTH):
