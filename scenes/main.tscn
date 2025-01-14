@@ -22,7 +22,7 @@ seed = 30
 noise_type = 3
 seed = 10
 
-[node name="Node3D" type="Node3D"]
+[node name="Main" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.203796, 0, 2.39996)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
