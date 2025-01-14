@@ -38,8 +38,8 @@ func set_grid(new_grid: Array):
 
 func generate_mesh() -> void:
 	# Reset children (if any) to avoid overlapping
-	for child in get_children():
-		child.queue_free()
+	#for child in get_children():
+		#child.queue_free()
 
 	var surface_tool = SurfaceTool.new()
 	surface_tool.begin(Mesh.PRIMITIVE_TRIANGLES)
@@ -73,7 +73,6 @@ func generate_mesh() -> void:
 	collision_shape.shape = mesh.create_trimesh_shape()
 	$CollisionShape3D.shape = collision_shape.shape
 	add_child(collision_shape)
-	
 
 func add_wall_vertices(surface_tool: SurfaceTool, position: Vector3, material: Material):
 	var height = wall_height

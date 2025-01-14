@@ -10,8 +10,12 @@ var grid = []
 var start_position = Vector2.ZERO
 var player : Node3D
 
+@export var seed = 0
+
+var rng = RandomNumberGenerator.new()
+
 func _ready():
-	randomize()
+	rng.seed = seed
 	initialize_grid()
 	generate_cave()
 	choose_start_position()
@@ -30,7 +34,7 @@ func initialize_grid():
 				grid[x].append(true)
 			else:
 				# Células internas são geradas aleatoriamente
-				grid[x].append(randf() < 0.45)
+				grid[x].append(rng.randf() < 0.45)
 
 func generate_cave():
 	for i in range(4):
@@ -66,10 +70,10 @@ func choose_start_position():
 				valid_positions.append(Vector2(x, y))
 	
 	if valid_positions.size() > 0:
-		start_position = valid_positions[randi() % valid_positions.size()]
+		start_position = valid_positions[rng.randi() % valid_positions.size()]
 
 func move_player_to_start():
-	var player_node = get_node("PseudoPlayer")
+	var player_node = $Player
 	if player_node:
 		var player_pos_x = start_position.x * CELL_SIZE
 		var player_pos_z = start_position.y * CELL_SIZE
@@ -121,6 +125,10 @@ func draw_3d_cave():
 	mesh_instance.mesh = array_mesh
 	add_child(mesh_instance)
 
+	var collision_shape = CollisionShape3D.new()
+	collision_shape.shape = array_mesh.create_trimesh_shape()
+	add_child(collision_shape)
+
 func add_wall_vertices(surface_tool: SurfaceTool, position: Vector3, material: Material):
 	var height = WALL_HEIGHT
 	var base_vertices = [
@@ -170,8 +178,8 @@ func add_quad(surface_tool: SurfaceTool, v1: Vector3, v2: Vector3, v3: Vector3, 
 func add_random_lights():
 	for i in range(NUM_LIGHTS):
 		# Gera uma posição aleatória no grid, excluindo as bordas
-		var rand_x = randi_range(1, WIDTH - 2)
-		var rand_y = randi_range(1, HEIGHT - 2)
+		var rand_x = rng.randi_range(1, WIDTH - 2)
+		var rand_y = rng.randi_range(1, HEIGHT - 2)
 		
 		if not grid[rand_x][rand_y]:  # Verifica se a célula é uma parede
 			var light = OmniLight3D.new()
