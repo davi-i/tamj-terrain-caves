@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://hochdqa62uba"]
+
+[ext_resource type="Script" path="res://scripts/itemScript.gd" id="1_yvs77"]
+[ext_resource type="Texture2D" uid="uid://sikcepwq8mu3" path="res://item/#1 - Transparent Icons.png" id="2_2ffni"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_snt5p"]
+atlas = ExtResource("2_2ffni")
+region = Rect2(96, 544, 32, 32)
+
+[resource]
+script = ExtResource("1_yvs77")
+name = "gold"
+description = "a precious stone"
+stackable = true
+texture = SubResource("AtlasTexture_snt5p")

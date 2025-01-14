@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b33ch64nxrmfa"]
+[gd_scene load_steps=12 format=3 uid="uid://b33ch64nxrmfa"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_t77w0"]
 [ext_resource type="Resource" uid="uid://c51egevmrrrou" path="res://inventory/player_inventory.tres" id="2_fndbh"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://cgf8tai41c3at" path="res://inventory/inventory.tscn" id="3_yg0rj"]
 [ext_resource type="PackedScene" uid="uid://bsbtqvs3plu6r" path="res://scenes/terrain_generator.tscn" id="4_kavxw"]
 [ext_resource type="Script" path="res://scenes/inventoryinterface.gd" id="5_pxugc"]
-[ext_resource type="PackedScene" uid="uid://xk4m18ep5kfw" path="res://inventory/slot.tscn" id="7_6k7er"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_rg7fv"]
 noise_type = 3
@@ -57,7 +56,6 @@ player = NodePath("../Player")
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="inventoryinterface" type="Control" parent="UI"]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -73,11 +71,3 @@ offset_left = 10.0
 offset_top = 10.0
 offset_right = 50.0
 offset_bottom = 50.0
-
-[node name="grabbed_slot" parent="UI/inventoryinterface" instance=ExtResource("7_6k7er")]
-visible = false
-modulate = Color(1, 1, 1, 0.72549)
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 0
-offset_right = 64.0
-offset_bottom = 64.0
