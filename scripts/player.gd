@@ -53,10 +53,6 @@ func _input(event):
 
 
 	elif event is InputEvent:
-		if event.is_action_pressed("exit"):
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		elif event.is_action_pressed("enter"):
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		if event.is_action_pressed("run"):
 			speed = RUNNING_SPEED
 		if event.is_action_pressed("inventory"):

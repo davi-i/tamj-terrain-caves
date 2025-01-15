@@ -12,6 +12,8 @@ func set_slot_data(slot_data: SlotData) -> void:
 	if slot_data.quantity > 1:
 		label.text = "x%s" % slot_data.quantity
 		label.show()
+	else:
+		label.hide()
 
 
 func input(event: InputEvent) -> void:

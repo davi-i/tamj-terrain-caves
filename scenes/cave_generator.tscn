@@ -1,7 +1,38 @@
-[gd_scene load_steps=2 format=3 uid="uid://dtoxvypjdkgtn"]
+[gd_scene load_steps=5 format=3 uid="uid://dtoxvypjdkgtn"]
 
 [ext_resource type="Script" path="res://scripts/cave_generator.gd" id="1_xvg2y"]
+[ext_resource type="Script" path="res://scenes/inventoryinterface.gd" id="2_eguco"]
+[ext_resource type="PackedScene" uid="uid://cgf8tai41c3at" path="res://inventory/inventory.tscn" id="3_e2vgi"]
+[ext_resource type="PackedScene" uid="uid://xk4m18ep5kfw" path="res://inventory/slot.tscn" id="4_jbjub"]
 
 [node name="Cave_Generator" type="StaticBody3D"]
 script = ExtResource("1_xvg2y")
 seed = 200
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="inventoryinterface" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_eguco")
+metadata/_edit_use_anchors_ = true
+
+[node name="player_inv" parent="UI/inventoryinterface" instance=ExtResource("3_e2vgi")]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 50.0
+offset_bottom = 50.0
+
+[node name="grabbed_slot" parent="UI/inventoryinterface" instance=ExtResource("4_jbjub")]
+visible = false
+modulate = Color(1, 1, 1, 0.72549)
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bnh7unatvbypk"]
 
 [ext_resource type="PackedScene" uid="uid://dtoxvypjdkgtn" path="res://scenes/cave_generator.tscn" id="1_kup8j"]
-[ext_resource type="PackedScene" uid="uid://dj8tljptden0g" path="res://scenes/pseudo_player.tscn" id="2_wfigc"]
+[ext_resource type="PackedScene" uid="uid://bqk4mcip5cxse" path="res://scenes/player.tscn" id="2_wfigc"]
 
 [sub_resource type="GDScript" id="GDScript_p0p1t"]
 

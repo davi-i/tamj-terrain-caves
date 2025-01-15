@@ -26,6 +26,7 @@ fog_depth_end = 128.0
 volumetric_fog_anisotropy = 0.9
 
 [node name="Player" type="CharacterBody3D"]
+collision_layer = 3
 script = ExtResource("1_862tt")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
