@@ -5,6 +5,7 @@ const HEIGHT = 30
 const CELL_SIZE = 5
 const WALL_HEIGHT = 10
 const NUM_LIGHTS = 10
+const NUM_PICK_UPS = 20
 
 var grid = []
 var start_position = Vector2.ZERO
@@ -14,8 +15,19 @@ var player : Node3D
 var entrance: CaveEntrance
 
 var exit_res = preload("res://scenes/cave_exit.tscn")
+const PickUp = preload("res://item/pick_ups/pick_up.tscn")
+
+var pick_up_types = [
+	preload("res://item/itens/diamond.tres"), 
+	preload("res://item/itens/fossil.tres"), 
+	preload("res://item/itens/gold.tres"),  
+	preload("res://item/itens/rock.tres"), 
+	preload("res://item/itens/ruby.tres")   
+]
 
 var rng = RandomNumberGenerator.new()
+
+var selected_pick_up_type : Resource
 
 func _ready():
 	rng.seed = seed
@@ -27,6 +39,7 @@ func _ready():
 	draw_3d_cave()
 	move_player_to_start()
 	add_random_lights()
+	add_random_pick_up()
 
 func initialize_grid():
 	for x in range(WIDTH):
@@ -197,3 +210,20 @@ func add_random_lights():
 			light.omni_range = 50
 			light.light_color = Color.YELLOW
 			add_child(light)
+
+func add_random_pick_up():
+	selected_pick_up_type = pick_up_types[rng.randi_range(0, pick_up_types.size() - 1)]  
+	
+	for i in range(NUM_PICK_UPS):
+		var rand_x = rng.randi_range(1, WIDTH - 2)
+		var rand_y = rng.randi_range(1, HEIGHT - 2)
+		var slot_data = SlotData.new() 
+		
+		if not grid[rand_x][rand_y]:
+			slot_data.item_data = selected_pick_up_type  
+			var pick_up = PickUp.instantiate()
+			pick_up.slot_data = slot_data
+
+			pick_up.position = Vector3(rand_x * CELL_SIZE, WALL_HEIGHT, rand_y * CELL_SIZE)
+
+			add_child(pick_up)

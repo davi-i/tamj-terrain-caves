@@ -22,5 +22,6 @@ func _on_inventoryinterface_drop_slot_data(slot_data: SlotData) -> void:
 	print(slot_data)
 	var pick_up = PickUp.instantiate()
 	pick_up.slot_data = slot_data
+	print(pick_up.slot_data)
 	pick_up.position = Vector3.UP
 	add_child(pick_up)
