@@ -45,6 +45,6 @@ func _on_gui_input(event: InputEvent) -> void:
 			MOUSE_BUTTON_MASK_LEFT:
 				print("Dropou")
 				drop_slot_data.emit(grabbed_slot_data)
-				#grabbed_slot_data = null
+				grabbed_slot_data = null
 	
 	update_grabbed_slot()

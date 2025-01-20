@@ -36,7 +36,6 @@ item_data = ExtResource("9_qcgcq")
 quantity = 1
 
 [node name="Main" type="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.203796, 0, 2.39996)
 script = ExtResource("1_t77w0")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]

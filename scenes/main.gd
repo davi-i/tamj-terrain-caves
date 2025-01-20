@@ -22,6 +22,12 @@ func _on_inventoryinterface_drop_slot_data(slot_data: SlotData) -> void:
 	print(slot_data)
 	var pick_up = PickUp.instantiate()
 	pick_up.slot_data = slot_data
-	print(pick_up.slot_data)
-	pick_up.position = Vector3.UP
+	var camera_angle = player.get_node("Camera3D").global_rotation.y
+	var fixed_angle = PI + camera_angle
+	print("angle", rad_to_deg(fixed_angle))
+	var impulse = Vector3(sin(fixed_angle), 0, cos(fixed_angle)).normalized() * 10
+	#var impulse = Vector2(camera_rotaion.x, camera_rotaion.z).normalized() * 10
+	print("impulse", impulse)
+	pick_up.global_position = player.global_position + impulse / 5
+	pick_up.apply_impulse(impulse)
 	add_child(pick_up)
