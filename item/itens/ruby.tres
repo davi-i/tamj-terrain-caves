@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://bk5nf62lg24xe"]
+
+[ext_resource type="Script" path="res://scripts/itemScript.gd" id="1_5y7mw"]
+[ext_resource type="Texture2D" uid="uid://sikcepwq8mu3" path="res://item/#1 - Transparent Icons.png" id="2_leuql"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_snt5p"]
+atlas = ExtResource("2_leuql")
+region = Rect2(480, 384, 32, 32)
+
+[resource]
+script = ExtResource("1_5y7mw")
+name = "rock"
+description = "a red gem"
+stackable = true
+texture = SubResource("AtlasTexture_snt5p")

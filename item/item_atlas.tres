@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://dp4e0lxal0wnw"]
+
+[ext_resource type="Texture2D" uid="uid://sikcepwq8mu3" path="res://item/#1 - Transparent Icons.png" id="1_seajd"]
+
+[resource]
+atlas = ExtResource("1_seajd")
+region = Rect2(32, 544, 32, 32)

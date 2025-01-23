@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgf8tai41c3at"]
+
+[ext_resource type="Script" path="res://inventory/inventory.gd" id="1_4a1tg"]
+
+[node name="inventory" type="PanelContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_4a1tg")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="itemGrid" type="GridContainer" parent="MarginContainer"]
+layout_mode = 2
+columns = 4

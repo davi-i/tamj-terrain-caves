@@ -5,8 +5,13 @@ const HEIGHT = 30
 const CELL_SIZE = 5
 const WALL_HEIGHT = 10
 const NUM_LIGHTS = 10
+const NUM_PICK_UPS = 20
 
 var grid = []
+
+var picks_ups = []
+var coletados = []
+
 var start_position = Vector2.ZERO
 var player : Node3D
 
@@ -14,19 +19,35 @@ var player : Node3D
 var entrance: CaveEntrance
 
 var exit_res = preload("res://scenes/cave_exit.tscn")
+const PickUp = preload("res://item/pick_ups/pick_up.tscn")
+
+signal collected
+
+var pick_up_types = [
+	preload("res://item/itens/diamond.tres"), 
+	preload("res://item/itens/fossil.tres"), 
+	preload("res://item/itens/gold.tres"),  
+	preload("res://item/itens/rock.tres"), 
+	preload("res://item/itens/ruby.tres")   
+]
 
 var rng = RandomNumberGenerator.new()
 
+var selected_pick_up_type : Resource
+
 func _ready():
-	rng.seed = seed
-	initialize_grid()
-	generate_cave()
-	choose_start_position()
+	#rng.seed = seed
+	#initialize_grid()
+	#generate_cave()
+	#choose_start_position()
+	#save_pick_up_positions()
 	
 	draw_2d_cave()
 	draw_3d_cave()
 	move_player_to_start()
 	add_random_lights()
+	
+	add_pick_ups_to_scene()
 
 func initialize_grid():
 	for x in range(WIDTH):
@@ -91,20 +112,27 @@ func move_player_to_start():
 	add_child(exit)
 
 func draw_2d_cave():
+	var map_offset = Vector2(940, 5)
+	print("Coletado")
+	print(coletados)
+	print("Pickups")
+	print(picks_ups)
 	for x in range(WIDTH):
 		for y in range(HEIGHT):
 			var cell = ColorRect.new()
 			cell.size = Vector2(CELL_SIZE, CELL_SIZE)
-			cell.position = Vector2(x * CELL_SIZE, y * CELL_SIZE)
+			cell.position = Vector2(x * CELL_SIZE, y * CELL_SIZE) + map_offset
 			
 			if grid[x][y]:
 				cell.color = Color.BLACK
 			else:
 				cell.color = Color.WHITE
-
 			if Vector2(x, y) == start_position:
 				cell.color = Color(0, 1, 0)
-
+			if Vector2(x, y) in picks_ups:
+				cell.color = Color(1, 1, 0)
+			if Vector2(x, y) in coletados:
+				cell.color = Color(0, 0, 1)
 			add_child(cell)
 
 func draw_3d_cave():
@@ -197,3 +225,58 @@ func add_random_lights():
 			light.omni_range = 50
 			light.light_color = Color.YELLOW
 			add_child(light)
+
+func add_random_pick_up():
+	selected_pick_up_type = pick_up_types[rng.randi_range(0, pick_up_types.size() - 1)]  
+	
+	for i in range(NUM_PICK_UPS):
+		var rand_x = rng.randi_range(1, WIDTH - 2)
+		var rand_y = rng.randi_range(1, HEIGHT - 2)
+		var slot_data = SlotData.new() 
+		
+		if not grid[rand_x][rand_y]:
+			slot_data.item_data = selected_pick_up_type  
+			var pick_up = PickUp.instantiate()
+			pick_up.slot_data = slot_data
+
+			pick_up.position = Vector3(rand_x * CELL_SIZE, 2, rand_y * CELL_SIZE)
+
+			add_child(pick_up)
+			picks_ups.append(pick_up.position)
+			
+			
+func save_pick_up_positions():
+	# Clear the previous list of pickup positions
+	picks_ups.clear()
+
+	# Add random pickup positions to the list
+	for i in range(NUM_PICK_UPS):
+		var rand_x = rng.randi_range(1, WIDTH - 2)
+		var rand_y = rng.randi_range(1, HEIGHT - 2)
+
+		if not grid[rand_x][rand_y]:  # Check if it's not a wall
+			# Save the position of the pick-up
+			picks_ups.append(Vector2(rand_x, rand_y))
+
+func add_pick_ups_to_scene():
+	
+	selected_pick_up_type = pick_up_types[rng.randi_range(0, pick_up_types.size() - 1)] 
+	var slot_data = SlotData.new()
+	slot_data.item_data = selected_pick_up_type
+	
+	for pick_up_pos in picks_ups:
+		if pick_up_pos not in coletados:
+			var pick_up = PickUp.instantiate()
+			pick_up.slot_data = slot_data
+			
+			# Position the pickup at the corresponding position in 3D space
+			pick_up.position = Vector3(pick_up_pos.x * CELL_SIZE, 2, pick_up_pos.y * CELL_SIZE)
+	
+			# Add the pick-up to the scene
+			add_child(pick_up)
+			pick_up.connect("collected", Callable(self, "coletou"))
+		#pick_up.emit_signal("collected", pick_up.position)
+
+func coletou(position: Vector3):
+	var position2D = Vector2(int(position.x / CELL_SIZE), int(position.z / CELL_SIZE))
+	collected.emit(position2D)
